@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div id="maincontainer"></div>
+    <script>
+
+      //Create topic element
+      const topic = document.createElement("h1");
+      topic.innerHTML = "Exercise 04: JavaScript&DOM";
+
+      //Create buttton element
+      const button = document.createElement("BUTTON");
+      const text = document.createTextNode("Click me to display Date and Time");
+      button.appendChild(text);
+
+      //Create link element
+      const containerLink = document.createElement("div");
+
+      //style containerLink
+      containerLink.style.marginTop = "20px";
+      containerLink.style.paddingTop = "20px";
+      containerLink.style.marginbottom = "20px";
+      containerLink.style.paddingBottom = "20px";
+      const link = document.createElement("a");
+      link.textContent = "Personal Info";
+      link.href = "#";
+      link.id = "toggleLink";
+      let listVisible = false;
+
+      const showData = () => {
+        const myList = document.createElement("ul");
+
+        // Create an array of items
+        const items = [
+          "Pornthep Thammawong ,ID: 65010682",
+          "Subject: Web application development",
+          "Semester: 2",
+        ];
+
+        for (let i = 0; i < items.length; i++) {
+          let listItem = document.createElement("li");
+          listItem.textContent = items[i];
+          myList.appendChild(listItem);
+        }
+
+        const existingList = document.getElementById("myList");
+
+        if (existingList) {
+          containerLink.removeChild(existingList);
+        }
+
+        myList.id = "myList";
+
+        containerLink.appendChild(myList);
+        listVisible = true;
+      };
+      const hideData = () => {
+        let existingList = document.getElementById("myList");
+        if (existingList) {
+          containerLink.removeChild(existingList);
+        }
+        // Update the visibility state
+        listVisible = false;
+      };
+
+      //style the text
+      link.style.color = "#F824EB";
+      link.addEventListener("mouseover", (event) => {
+        link.style.color = "black";
+        link.style.backgroundColor = "yellow";
+        link.style.cursor = "pointer";
+      });
+      link.addEventListener("mouseout", (event) => {
+        link.style.color = "#F824EB";
+        link.style.backgroundColor = "";
+        link.style.cursor = "";
+      });
+
+      link.addEventListener("click", (event) => {
+        // Prevent the default behavior of the anchor link
+        event.preventDefault();
+        // Toggle the list
+        toggleList();
+      });
+
+      const toggleList = () => {
+        listVisible ? hideData() : showData();
+      };
+
+      containerLink.appendChild(link);
+
+      //Create the topic picture
+      const ContainerPictureList = document.createElement("div");
+      const pictureWrap = document.createElement("div");
+      pictureWrap.id = 'pictureWrap';
+
+      //main picture
+      const mainPicture = document.createElement("img");
+      mainPicture.src = 'https://img5.pic.in.th/file/secure-sv1/tiger-artwork-black-pc-9roy8i4xos0cju3e.jpeg'
+      mainPicture.style.height = "50px"
+      mainPicture.style.width = "500px"
+      pictureWrap.appendChild(mainPicture);
+
+      const topicText = document.createElement("h1");
+      topicText.innerHTML = "Snapshot";
+
+      //Style the topicText and Container picture
+      ContainerPictureList.style.marginTop = "10px";
+      ContainerPictureList.style.marginbottom = "10px";
+      ContainerPictureList.style.paddingTop = "10px";
+      ContainerPictureList.style.padingbottom = "10px";
+      topicText.style.fontSize = "50px";
+
+      //Create the picture list element
+      const picturePack = document.createElement("ul");
+
+      const items = [
+        "https://img5.pic.in.th/file/secure-sv1/385531313_3489992631238778_1580497366532725351_n.jpeg",
+        "https://img2.pic.in.th/pic/9d5876b0-a092-4135-8d38-5472daf62b2e.jpeg",
+        "https://img2.pic.in.th/pic/IMG_57821.jpeg",
+        "https://img5.pic.in.th/file/secure-sv1/FHD0081.jpeg",
+      ];
+      const namePicture = ["Robot", "Apple", "Me", "Dogs"];
+
+      //fucntion show picture
+      const showPicture = (event, imageSrc) => {
+        // Prevent the default behavior of anchor tag
+        event.preventDefault();
+
+        // Clear previous content
+        document.getElementById('pictureWrap').innerHTML = "";
+
+        // Create new image element
+        let imgElement = document.createElement("img");
+        imgElement.src = imageSrc;
+        imgElement.style.height = "300px";
+        imgElement.style.width = "500px";
+        // Append image to container
+        document.getElementById('pictureWrap').appendChild(imgElement);
+      };
+
+      //Loop the img link
+      for (let x = 0; x < 4; x++) {
+        let link = document.createElement("a");
+        let pictureList = document.createElement("li");
+        link.href = "#";
+        link.addEventListener("click", (event) => showPicture(event, items[x]));
+        link.textContent = namePicture[x];
+        pictureList.appendChild(link);
+        picturePack.appendChild(pictureList);
+      }
+
+      ContainerPictureList.appendChild(topicText);
+      ContainerPictureList.appendChild(picturePack);
+      ContainerPictureList.appendChild(pictureWrap);
+
+      //Append to to another element
+      document.getElementById("maincontainer").appendChild(topic);
+      document.getElementById("maincontainer").appendChild(button);
+      document.getElementById("maincontainer").appendChild(containerLink);
+      document.getElementById("maincontainer").appendChild(ContainerPictureList);
+      
+    </script>
+  </body>
+</html>
