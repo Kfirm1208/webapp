@@ -4,15 +4,43 @@
   <body>
     <div id="maincontainer"></div>
     <script>
-
       //Create topic element
       const topic = document.createElement("h1");
       topic.innerHTML = "Exercise 04: JavaScript&DOM";
+      document.getElementById("maincontainer").appendChild(topic);
 
       //Create buttton element
+      let w;
       const button = document.createElement("BUTTON");
       const text = document.createTextNode("Click me to display Date and Time");
+      button.style.top = 0 + "px";
+      button.style.right = 0 + "px";
       button.appendChild(text);
+      document.getElementById("maincontainer").appendChild(button);
+      button.addEventListener("click", () => {
+        if (typeof w === "undefined") {
+          w = new Worker("webworker.js");
+          w.onmessage = (event) => {
+            const colors = [
+              "#48C9B0",
+              "#3498DB",
+              "#9B59B6",
+              "#E74C3C",
+              "#F4D03F",
+              "#2980B9",
+            ];
+            const colorIndex = event.data.num % 6;
+            button.innerHTML = event.data.time;
+            button.style.position = "fixed";
+            button.style.backgroundColor = colors[colorIndex];
+            button.style.color = colors[(colorIndex + 3) % 6];
+          };
+        } else {
+          w.terminate();
+          w = undefined;
+          button.style.position = "static";
+        }
+      });
 
       //Create link element
       const containerLink = document.createElement("div");
@@ -20,8 +48,8 @@
       //style containerLink
       containerLink.style.marginTop = "20px";
       containerLink.style.paddingTop = "20px";
-      containerLink.style.marginbottom = "20px";
-      containerLink.style.paddingBottom = "20px";
+      containerLink.style.marginbottom = "10px";
+      containerLink.style.paddingBottom = "10px";
       const link = document.createElement("a");
       link.textContent = "Personal Info";
       link.href = "#";
@@ -87,19 +115,20 @@
       const toggleList = () => {
         listVisible ? hideData() : showData();
       };
-
       containerLink.appendChild(link);
+      document.getElementById("maincontainer").appendChild(containerLink);
 
       //Create the topic picture
       const ContainerPictureList = document.createElement("div");
       const pictureWrap = document.createElement("div");
-      pictureWrap.id = 'pictureWrap';
+      pictureWrap.id = "pictureWrap";
 
       //main picture
       const mainPicture = document.createElement("img");
-      mainPicture.src = 'https://img5.pic.in.th/file/secure-sv1/tiger-artwork-black-pc-9roy8i4xos0cju3e.jpeg'
-      mainPicture.style.height = "50px"
-      mainPicture.style.width = "500px"
+      mainPicture.src =
+        "https://img5.pic.in.th/file/secure-sv1/tiger-artwork-black-pc-9roy8i4xos0cju3e.jpeg";
+      mainPicture.style.height = "300px";
+      mainPicture.style.width = "500px";
       pictureWrap.appendChild(mainPicture);
 
       const topicText = document.createElement("h1");
@@ -129,7 +158,7 @@
         event.preventDefault();
 
         // Clear previous content
-        document.getElementById('pictureWrap').innerHTML = "";
+        document.getElementById("pictureWrap").innerHTML = "";
 
         // Create new image element
         let imgElement = document.createElement("img");
@@ -137,7 +166,7 @@
         imgElement.style.height = "300px";
         imgElement.style.width = "500px";
         // Append image to container
-        document.getElementById('pictureWrap').appendChild(imgElement);
+        document.getElementById("pictureWrap").appendChild(imgElement);
       };
 
       //Loop the img link
@@ -150,16 +179,12 @@
         pictureList.appendChild(link);
         picturePack.appendChild(pictureList);
       }
-
+      document
+        .getElementById("maincontainer")
+        .appendChild(ContainerPictureList);
       ContainerPictureList.appendChild(topicText);
       ContainerPictureList.appendChild(picturePack);
       ContainerPictureList.appendChild(pictureWrap);
-
-      //Append to to another element
-      document.getElementById("maincontainer").appendChild(topic);
-      document.getElementById("maincontainer").appendChild(button);
-      document.getElementById("maincontainer").appendChild(containerLink);
-      document.getElementById("maincontainer").appendChild(ContainerPictureList);
       
     </script>
   </body>
